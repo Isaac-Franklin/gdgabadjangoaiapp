@@ -1,0 +1,97 @@
+{% load static %} 
+{% block content %}
+<body>
+    <nav>
+        <div class='desktoplogo'>
+            <img src={% static 'general/img/itsalogopng1.png' %} />
+        </div>
+
+        <div class='responsivesection'>
+            <div class='responsivesection1'>
+                <img src={% static 'general/img/itsalogopng1.png' %} />            
+                <div class='hamburgerMain'>
+                    <a class="hamburger" href="#"><span></span></a>
+                </div>
+            </div>
+            <div class='responsivesection2'>
+                <div class='notifyout mobileviewnotify' >
+                    <img class='notify' src={% static 'general/img/notify.png' %} />
+                    <div class='NewNotifyCount2'></div>
+                </div>
+                <div class='notifysectioninner2'>
+                    {% if allSignUps.user == request.user %}
+                    <h4>{{ allSignUps.companyname }}</h4>
+                    {% else %}
+                    {{request.user}}
+                    {% endif %}
+                    <div class='profileimgsectiontext2'>
+                        <h1></h1>                        
+                        {% if allSignUps.user == request.user %}
+                        <p class='requestUser'>{{ allSignUps.companyname }}</p>
+                        {% else %}
+                        <p class='requestUser'>{{ request.user }}</p>
+                        {% endif %}
+                    </div>
+                    {% comment %} <img src={% static 'general/img/arrow-down.png' %} /> {% endcomment %}
+                </div>
+            </div>
+        </div>
+        <div class='navBtn'>
+            <form method='POST'>
+                {% csrf_token %}
+                <input name='startAISession'type='hidden'  />
+                <button type='submit'>
+                    <img src={% static 'general\img\aiicon.png' %} />
+                    Ask Our AI</button>
+            </form>
+        </div>
+        <div class='notifysection'>
+            <div class='notifyout desktopviewnotify' >
+                <img class='notify' src={% static 'general/img/notify.png' %} />
+                <div class='NewNotifyCount'></div>
+                {% comment %} <img class='notifyactive' src={% static 'general/img/notify-active.png' %} /> {% endcomment %}
+            </div>
+
+            {% comment %} NOTIFICATION TAB STARTS HERE {% endcomment %}
+            <div class='allNotificationTabElements'>
+                <div class='notifySectionPopuPOut'>
+                    <div class='notifySectionPopuP'>
+                        <div class='notifySectionPopuPInner'>
+                            <h3>All Notification</h3>
+                            {% comment %} <div>
+                                <select>
+                                    <option>All</option>
+                                    <option>Unread</option>
+                                    <option>Read</option>
+                                </select>
+                            </div> {% endcomment %}
+                        </div>
+                        <div>
+                            {% comment %} <img src={% static 'general/img/notification.png' %} /> {% endcomment %}
+                        </div>
+                    </div>
+                    {% for AllMaintenanceRequests in AllMaintenanceRequests %}
+                    <div class='noticationSectionProperIn'>
+                        {% comment %} <a href= /member/maintenancedetails/{{AllMaintenanceRequests.MaintainRequestID}}/ > {% endcomment %}
+                        <div>
+                            <p class='notificationproper'>
+                                {{AllMaintenanceRequests.MaintainRequester}} Just made a maintenance request with maintenance ID: <a href= "/member/maintenancedetails/{{AllMaintenanceRequests.MaintainRequestID}}/" > <span>{{AllMaintenanceRequests.MaintainRequestID}}</span> </a>
+                            </p>
+                            <p>{{AllMaintenanceRequests.created_at}}</p>
+                        </div>
+                        <hr/>
+                        {% comment %} </a> {% endcomment %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% comment %} NOTIFICATION TAB ENDS HERE {% endcomment %}
+           
+        </div>
+
+
+    </nav>
+    {% comment %} SIDE BAR ENDS HERE {% endcomment %}
+
+</body>
+{% endblock content %}
